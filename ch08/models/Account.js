@@ -50,14 +50,6 @@ module.exports = function(mongoose) {
     });
   };
 
-  var login = function(email, password, cb) {
-    var shaSum = crypto.createHash('sha256');
-    shaSum.update(password);
-    Account.findOne({email:email,password:shaSum.digest('hex')},function(err,doc){
-	  cb(null!=doc);
-    });
-  };
-
   var register = function(email, password, firstName, lastName) {
     var shaSum = crypto.createHash('sha256');
     shaSum.update(password);
@@ -78,7 +70,6 @@ module.exports = function(mongoose) {
   return {
     register: register,
     forgotPassword: forgotPassword,
-    login: login,
     Account: Account
   }
 }
