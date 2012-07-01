@@ -4,10 +4,12 @@ var app = express.createServer();
 
 // Import the data layer
 var mongoose = require('mongoose');
-var Account = require('./models/Account')(mongoose);
 var config = {
   mail: require('./config/mail')
 }
+
+// Import the accounts
+var Account = require('./models/Account')(config, mongoose, nodemailer);
 
 app.configure(function(){
   app.set('view engine', 'jade');
@@ -18,7 +20,7 @@ app.configure(function(){
 });
 
 app.get('/', function(req, res){
-  res.render("index.jade", {layout:false});
+  res.render('index.jade');
 });
 
 app.post('/login', function(req, res) {
@@ -64,13 +66,36 @@ app.get('/account/authenticated', function(req, res) {
 });
 
 app.post('/forgotpassword', function(req, res) {
+  var hostname = req.headers.host;
+  var resetPasswordUrl = 'http://' + hostname + '/resetPassword';
   var email = req.param('email', null);
   if ( null == email || email.length < 1 ) {
     res.send(400);
     return;
   }
 
-  Account.forgotPassword(email, req, res);
+  Account.forgotPassword(email, resetPasswordUrl, function(success){
+    if (success) {
+	  res.send(200);
+    } else {
+	  // Username or password not found
+	  res.send(404);
+    }
+  });
+});
+
+app.get('/resetPassword', function(req, res) {
+  var accountId = req.param('account', null);
+  res.render('resetPassword.jade', {locals:{accountId:accountId}});
+});
+
+app.post('/resetPassword', function(req, res) {
+  var accountId = req.param('accountId', null);
+  var password = req.param('password', null);
+  if ( null != accountId && null != password ) {
+	Account.changePassword(accountId, password);
+  }
+  res.render('resetPasswordSuccess.jade');
 });
 
 app.listen(8080);

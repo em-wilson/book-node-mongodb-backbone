@@ -1,4 +1,4 @@
-module.exports = function(mongoose) {
+module.exports = function(config, mongoose, nodemailer) {
   var crypto = require('crypto');
 
   var AccountSchema = new mongoose.Schema({
@@ -20,30 +20,40 @@ module.exports = function(mongoose) {
   var Account = mongoose.model('Account', AccountSchema);
 
   var registerCallback = function(err) {
-    console.log('hit callback');
     if (err) {
       return console.log(err);
     };
-    return console.log("Account was created");
+    return console.log('Account was created');
   };
 
-  var forgotPassword = function(email, req, res) {
-    var user = Account.findOne({email: email}, function(err, docs){
+  var changePassword = function(accountId, newpassword) {
+    var shaSum = crypto.createHash('sha256');
+    shaSum.update(newpassword);
+    var hashedPassword = shaSum.digest('hex');
+    Account.update({_id:accountId}, {$set: {password:hashedPassword}},{upsert:false},
+	  function changePasswordCallback(err) {
+        console.log('Change password done for account ' + accountId);
+	});
+  };
+
+  var forgotPassword = function(email, resetPasswordUrl, callback) {
+    var user = Account.findOne({email: email}, function findAccount(err, doc){
       if (err) {
         // Email address is not a valid user
-        res.send(404);
+        callback(false);
       } else {
         var smtpTransport = nodemailer.createTransport('SMTP', config.mail);
+        resetPasswordUrl += '?account=' + doc._id;
         smtpTransport.sendMail({
-          from: "thisapp@example.com",
+          from: 'thisapp@example.com',
           to: doc.email,
-          subject: "SocialNet Password Request",
-          text: "Forgot password request"
-        }, function(err) {
+          subject: 'SocialNet Password Request',
+          text: 'Click here to reset your password: ' + resetPasswordUrl
+        }, function forgotPasswordResult(err) {
           if (err) {
-            res.send(err);
+            callback(false);
           } else {
-            res.send(200);
+            callback(true);
           }
         });
       }
@@ -62,7 +72,7 @@ module.exports = function(mongoose) {
     var shaSum = crypto.createHash('sha256');
     shaSum.update(password);
 
-    console.log("Registering " + email);
+    console.log('Registering ' + email);
     var user = new Account({
       email: email,
       name: {
@@ -78,6 +88,7 @@ module.exports = function(mongoose) {
   return {
     register: register,
     forgotPassword: forgotPassword,
+    changePassword: changePassword,
     login: login,
     Account: Account
   }
