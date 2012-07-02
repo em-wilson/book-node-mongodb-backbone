@@ -1,5 +1,6 @@
-var nodemailer = require('nodemailer');
 var express = require('express');
+var nodemailer = require('nodemailer');
+var MemoryStore = require('connect').session.MemoryStore;
 var app = express.createServer();
 
 // Import the data layer
@@ -16,6 +17,7 @@ app.configure(function(){
   app.use(express.static(__dirname + '/public'));
   app.use(express.limit('1mb'));
   app.use(express.bodyParser());
+  app.use(express.session({secret: "SocialNet secret key", store: new MemoryStore()}));
   mongoose.connect('mongodb://localhost/nodebackbone');
 });
 
@@ -35,12 +37,13 @@ app.post('/login', function(req, res) {
   }
 
   Account.login(email, password, function(success) {
-	  if ( !success ) {
-	    res.send(401);
-	    return;
-	  }
-      console.log('login was successful');
-	  res.send(200);
+    if ( !success ) {
+      res.send(401);
+      return;
+    }
+    console.log('login was successful');
+    req.session.loggedIn = true;
+	res.send(200);
   });
 });
 
@@ -61,8 +64,11 @@ app.post('/register', function(req, res) {
 });
 
 app.get('/account/authenticated', function(req, res) {
-  // Never authenticated for now
-  res.send(401);
+  if ( req.session.loggedIn ) {
+    res.send(200);
+  } else {
+    res.send(401);
+  }
 });
 
 app.post('/forgotpassword', function(req, res) {
@@ -76,10 +82,10 @@ app.post('/forgotpassword', function(req, res) {
 
   Account.forgotPassword(email, resetPasswordUrl, function(success){
     if (success) {
-	  res.send(200);
+      res.send(200);
     } else {
-	  // Username or password not found
-	  res.send(404);
+      // Username or password not found
+      res.send(404);
     }
   });
 });
@@ -93,7 +99,7 @@ app.post('/resetPassword', function(req, res) {
   var accountId = req.param('accountId', null);
   var password = req.param('password', null);
   if ( null != accountId && null != password ) {
-	Account.changePassword(accountId, password);
+    Account.changePassword(accountId, password);
   }
   res.render('resetPasswordSuccess.jade');
 });

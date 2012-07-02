@@ -1,5 +1,7 @@
 app.get('/account/authenticated', function(req, res) {
-  // Never authenticated for now
-  res.send(401);
-  //res.send(200);
+  if ( req.session.loggedIn ) {
+    res.send(200);
+  } else {
+    res.send(401);
+  }
 });
