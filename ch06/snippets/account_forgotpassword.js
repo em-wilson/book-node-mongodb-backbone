@@ -1,23 +1,23 @@
-  var forgotPassword = function(email, req, res) {
-    var user = Account.findOne({email: email}, function(err, docs){
-      if (err) {
-        // Email address is not a valid user
-        res.send(404);
-      } else {
-        var smtpTransport = nodemailer.createTransport('SMTP', config.mail);
-        smtpTransport.sendMail({
-          from: "thisapp@example.com",
-          to: doc.email,
-          subject: "SocialNet Password Request",
-          text: "Forgot password request"
-        }, function(err) {
-          if (err) {
-            res.send(err);
-          } else {
-            res.send(200);
-          }
-        });
-      }
-    });
-  };
-
+var forgotPassword = function(email, resetPasswordUrl, callback) {
+  var user = Account.findOne({email: email}, function findAccount(err, doc){
+    if (err) {
+      // Email address is not a valid user
+      callback(false);
+    } else {
+      var smtpTransport = nodemailer.createTransport('SMTP', config.mail);
+      resetPasswordUrl += '?account=' + doc._id;
+      smtpTransport.sendMail({
+        from: 'thisapp@example.com',
+        to: doc.email,
+        subject: 'SocialNet Password Request',
+        text: 'Click here to reset your password: ' + resetPasswordUrl
+      }, function forgotPasswordResult(err) {
+        if (err) {
+          callback(false);
+        } else {
+          callback(true);
+        }
+      });
+    }
+  });
+};
