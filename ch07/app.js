@@ -37,13 +37,14 @@ app.post('/login', function(req, res) {
     return;
   }
 
-  Account.login(email, password, function(success) {
-    if ( !success ) {
+  Account.login(email, password, function(account) {
+    if ( !account ) {
       res.send(401);
       return;
     }
     console.log('login was successful');
     req.session.loggedIn = true;
+    req.session.accountId = account._id;
 	res.send(200);
   });
 });
