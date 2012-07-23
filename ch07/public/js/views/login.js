@@ -24,6 +24,7 @@ define(['SocialNetView', 'text!templates/login.html'], function(SocialNetView, l
     render: function() {
       this.$el.html(loginTemplate);
       $("#error").hide();
+      $("input[name=email]").focus();
     }
   });
 
