@@ -1,4 +1,8 @@
-define(['views/index', 'views/register', 'views/login', 'views/forgotpassword', 'views/profile', 'models/Account', 'models/StatusCollection'], function(IndexView, RegisterView, LoginView, ForgotPasswordView, ProfileView, Account, StatusCollection) {
+define(['views/index', 'views/register', 'views/login',
+        'views/forgotpassword', 'views/profile', 'models/Account',
+        'models/StatusCollection'],
+function(IndexView, RegisterView, LoginView, ForgotPasswordView, ProfileView,
+	     Account, StatusCollection) {
   var SocialRouter = Backbone.Router.extend({
     currentView: null,
 
@@ -19,9 +23,12 @@ define(['views/index', 'views/register', 'views/login', 'views/forgotpassword', 
     },
 
     index: function() {
+      var statusCollection = new StatusCollection();
+      statusCollection.url = '/accounts/me/activity';
       this.changeView(new IndexView({
-        collection: new StatusCollection()
+        collection: statusCollection
       }));
+      statusCollection.fetch();
     },
 
     login: function() {

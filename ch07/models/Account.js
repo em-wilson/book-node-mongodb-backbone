@@ -41,9 +41,9 @@ module.exports = function(config, mongoose, Status, nodemailer) {
     shaSum.update(newpassword);
     var hashedPassword = shaSum.digest('hex');
     Account.update({_id:accountId}, {$set: {password:hashedPassword}},{upsert:false},
-	  function changePasswordCallback(err) {
+      function changePasswordCallback(err) {
         console.log('Change password done for account ' + accountId);
-	});
+    });
   };
 
   var forgotPassword = function(email, resetPasswordUrl, callback) {
@@ -74,7 +74,7 @@ module.exports = function(config, mongoose, Status, nodemailer) {
     var shaSum = crypto.createHash('sha256');
     shaSum.update(password);
     Account.findOne({email:email,password:shaSum.digest('hex')},function(err,doc){
-	  cb(doc);
+      cb(doc);
     });
   };
 

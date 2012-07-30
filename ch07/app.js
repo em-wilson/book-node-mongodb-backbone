@@ -1,7 +1,8 @@
-var express = require('express');
-var nodemailer = require('nodemailer');
+var express     = require('express');
+var nodemailer  = require('nodemailer');
 var MemoryStore = require('connect').session.MemoryStore;
-var app = express.createServer();
+var app         = express.createServer();
+var dbPath      = 'mongodb://localhost/nodebackbone';
 
 // Import the data layer
 var mongoose = require('mongoose');
@@ -11,7 +12,7 @@ var config = {
 
 // Import the models
 var models = {
-	Account: require('./models/Account')(config, mongoose, nodemailer)
+  Account: require('./models/Account')(config, mongoose, nodemailer)
 };
 
 app.configure(function(){
@@ -20,8 +21,11 @@ app.configure(function(){
   app.use(express.limit('1mb'));
   app.use(express.bodyParser());
   app.use(express.cookieParser());
-  app.use(express.session({secret: "SocialNet secret key", store: new MemoryStore()}));
-  mongoose.connect('mongodb://localhost/nodebackbone', function onMongooseError(err) {
+  app.use(express.session({
+    secret: "SocialNet secret key",
+    store: new MemoryStore()
+  }));
+  mongoose.connect(dbPath, function onMongooseError(err) {
     if (err) throw err;
   });
 });
@@ -49,7 +53,7 @@ app.post('/login', function(req, res) {
     console.log('login was successful');
     req.session.loggedIn = true;
     req.session.accountId = account._id;
-	res.send(200);
+    res.send(200);
   });
 });
 
@@ -108,7 +112,13 @@ app.post('/accounts/:id/status', function(req, res) {
 
     // Push the status to all friends
     account.activity.push(status);
+    account.save(function (err) {
+      if (err) {
+        console.log('Error saving account: ' + err);
+      }
+    });
   });
+  res.send(200);
 });
 
 app.get('/accounts/:id', function(req, res) {

@@ -1,4 +1,6 @@
-define(['SocialNetView', 'text!templates/index.html', 'views/status', 'models/Status'], function(SocialNetView, indexTemplate, StatusView, Status) {
+define(['SocialNetView', 'text!templates/index.html',
+        'views/status', 'models/Status'],
+function(SocialNetView, indexTemplate, StatusView, Status) {
   var indexView = SocialNetView.extend({
     el: $('#content'),
 
@@ -8,6 +10,14 @@ define(['SocialNetView', 'text!templates/index.html', 'views/status', 'models/St
 
     initialize: function() {
       this.collection.on('add', this.onStatusAdded, this);
+      this.collection.on('reset', this.onStatusCollectionReset, this);
+    },
+
+    onStatusCollectionReset: function(collection) {
+      var that = this;
+      collection.each(function (model) {
+        that.onStatusAdded(model);
+      });
     },
 
     onStatusAdded: function(status) {
