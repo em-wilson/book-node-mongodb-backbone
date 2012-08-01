@@ -9,6 +9,16 @@ module.exports = function(config, mongoose, Status, nodemailer) {
     status:    { type: String }
   });
 
+  var Contact = new mongoose.Schema({
+    name: {
+      first:   { type: String },
+      last:    { type: String }
+    },
+    accountId: { type: mongoose.Schema.ObjectId },
+    added:     { type: Date },     // When the contact was added
+    updated:   { type: Date }      // When the contact last updated
+  });
+
   var AccountSchema = new mongoose.Schema({
     email:     { type: String, unique: true },
     password:  { type: String },
@@ -23,6 +33,7 @@ module.exports = function(config, mongoose, Status, nodemailer) {
     },
     photoUrl:  { type: String },
     biography: { type: String },
+    contacts:  [Contact],
     status:    [Status], // My own status updates only
     activity:  [Status]  //  All status updates including friends
   });

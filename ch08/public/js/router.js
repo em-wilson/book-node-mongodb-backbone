@@ -1,17 +1,21 @@
 define(['views/index', 'views/register', 'views/login',
-        'views/forgotpassword', 'views/profile', 'models/Account',
-        'models/StatusCollection'],
+        'views/forgotpassword', 'views/profile', 'views/contacts',
+        'views/addcontact', 'models/Account', 'models/StatusCollection',
+        'models/ContactCollection'],
 function(IndexView, RegisterView, LoginView, ForgotPasswordView, ProfileView,
-	     Account, StatusCollection) {
+         ContactsView, AddContactView, Account, StatusCollection,
+         ContactCollection) {
   var SocialRouter = Backbone.Router.extend({
     currentView: null,
 
     routes: {
-      "index": "index",
-      "login": "login",
-      "register": "register",
-      "forgotpassword": "forgotpassword",
-      "profile/:id": "profile"
+      'addcontact': 'addcontact',
+      'index': 'index',
+      'login': 'login',
+      'register': 'register',
+      'forgotpassword': 'forgotpassword',
+      'profile/:id': 'profile',
+      'contacts/:id': 'contacts'
     },
 
     changeView: function(view) {
@@ -31,6 +35,10 @@ function(IndexView, RegisterView, LoginView, ForgotPasswordView, ProfileView,
       statusCollection.fetch();
     },
 
+    addcontact: function() {
+      this.changeView(new AddContactView());
+    },
+
     login: function() {
       this.changeView(new LoginView());
     },
@@ -47,6 +55,15 @@ function(IndexView, RegisterView, LoginView, ForgotPasswordView, ProfileView,
       var model = new Account({id:id});
       this.changeView(new ProfileView({model:model}));
       model.fetch();
+    },
+
+    contacts: function(id) {
+      var contactsCollection = new ContactCollection();
+      contactsCollection.url = '/accounts/me/contacts';
+      this.changeView(new ContactsView({
+        collection: contactsCollection
+      }));
+      contactsCollection.fetch();
     }
   });
 
