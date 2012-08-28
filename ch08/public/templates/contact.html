@@ -1,1 +1,11 @@
-<h1><%=name.first %> <%= name.last %></h1>
+<h1><%=model.name.first %> <%= model.name.last %></h1>
+
+<div class="actionarea">
+	<% if ( addButton ) { %>
+	<p><button class="addbutton">Add Contact</p>
+	<% } %>
+
+	<% if ( removeButton ) { %>
+	<p><button class="removeButton">Remove Contact</p>
+	<% } %>
+</div>

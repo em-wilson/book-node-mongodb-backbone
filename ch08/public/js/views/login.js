@@ -9,10 +9,8 @@ define(['SocialNetView', 'text!templates/login.html'], function(SocialNetView, l
     },
 
     login: function() {
-      $.post('/login', {
-        email: $('input[name=email]').val(),
-        password: $('input[name=password]').val()
-      }, function(data) {
+      $.post('/login',
+        this.$('form').serialize(), function(data) {
         window.location.hash = 'index';
       }).error(function(){
         $("#error").text('Unable to login.');

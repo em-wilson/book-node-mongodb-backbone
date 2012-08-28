@@ -24,7 +24,8 @@ module.exports = function(config, mongoose, Status, nodemailer) {
     password:  { type: String },
     name: {
       first:   { type: String },
-      last:    { type: String }
+      last:    { type: String },
+      full:    { type: String }
     },
     birthday: {
       day:     { type: Number, min: 1, max: 31, required: false },
@@ -89,11 +90,38 @@ module.exports = function(config, mongoose, Status, nodemailer) {
     });
   };
 
+  var findByString = function(searchStr, cb) {
+    var searchRegex = new RegExp(searchStr, 'i');
+    Account.find({
+      $or: [
+        { 'name.full': { $regex: searchRegex } },
+        { email:       { $regex: searchRegex } }
+      ]
+    }, cb);
+  };
+
   var findById = function(accountId, cb) {
     Account.findOne({_id:accountId}, function(err,doc) {
       cb(doc);
     });
-  }
+  };
+
+  // TODO: Finish this and make snippet
+  var addContact = function(account, addcontact) {
+    contact = {
+      name: addcontact.name,
+      accountId: addcontact._id,
+      added: new Date(),
+      updated: new Date()
+    };
+    account.contacts.push(contact);
+
+    account.save(function (err) {
+      if (err) {
+        console.log('Error saving account: ' + err);
+      }
+    });
+  };
 
   var register = function(email, password, firstName, lastName) {
     var shaSum = crypto.createHash('sha256');
@@ -104,19 +132,22 @@ module.exports = function(config, mongoose, Status, nodemailer) {
       email: email,
       name: {
         first: firstName,
-        last: lastName
+        last: lastName,
+        full: firstName + ' ' + lastName
       },
       password: shaSum.digest('hex')
     });
     user.save(registerCallback);
     console.log('Save command was sent');
-  }
+  };
 
   return {
     findById: findById,
     register: register,
     forgotPassword: forgotPassword,
     changePassword: changePassword,
+    findByString: findByString,
+    addContact: addContact,
     login: login,
     Account: Account
   }

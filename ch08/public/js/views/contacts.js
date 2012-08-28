@@ -4,14 +4,18 @@ function(SocialNetView, ContactView, contactsTemplate) {
     el: $('#content'),
 
     initialize: function() {
-      this.collection.on('reset', this.render, this);
+      this.collection.on('reset', this.renderCollection, this);
     },
 
     render: function() {
       this.$el.html(contactsTemplate);
-      this.collection.each(function(contact) {
-        var statusHtml = (new ContactView({ model: contact })).render().el;
-        $(statusHtml).prependTo('.contacts_list');
+    },
+
+    renderCollection: function(collection) {
+      collection.each(function(contact) {
+        var statusHtml = (new ContactView({ removeButton: true, model: contact })).render().el;
+        console.log(statusHtml);
+        $(statusHtml).appendTo('.contacts_list');
       });
     }
   });
