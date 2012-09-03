@@ -106,7 +106,6 @@ module.exports = function(config, mongoose, Status, nodemailer) {
     });
   };
 
-  // TODO: Finish this and make snippet
   var addContact = function(account, addcontact) {
     contact = {
       name: addcontact.name,
@@ -121,6 +120,28 @@ module.exports = function(config, mongoose, Status, nodemailer) {
         console.log('Error saving account: ' + err);
       }
     });
+  };
+
+  var removeContact = function(account, contactId) {
+    if ( null == account.contacts ) return;
+
+    account.contacts.forEach(function(contact) {
+      if ( contact.accountId == contactId ) {
+        account.contacts.remove(contact);
+      }
+    });
+    account.save();
+  };
+
+  var hasContact = function(account, contactId) {
+    if ( null == account.contacts ) return false;
+
+    account.contacts.forEach(function(contact)) {
+      if ( contact.accountId == contactId ) {
+        return true;
+      }
+    }
+    return false;
   };
 
   var register = function(email, password, firstName, lastName) {
@@ -148,6 +169,7 @@ module.exports = function(config, mongoose, Status, nodemailer) {
     changePassword: changePassword,
     findByString: findByString,
     addContact: addContact,
+    removeContact: removeContact,
     login: login,
     Account: Account
   }

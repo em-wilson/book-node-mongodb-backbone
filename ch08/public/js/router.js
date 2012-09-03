@@ -58,8 +58,9 @@ function(IndexView, RegisterView, LoginView, ForgotPasswordView, ProfileView,
     },
 
     contacts: function(id) {
+      var contactId = id ? id : 'me';
       var contactsCollection = new ContactCollection();
-      contactsCollection.url = '/accounts/me/contacts';
+      contactsCollection.url = '/accounts/' + contactId + '/contacts';
       this.changeView(new ContactsView({
         collection: contactsCollection
       }));
