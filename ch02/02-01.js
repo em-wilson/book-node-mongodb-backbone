@@ -1,5 +1,5 @@
 var express = require('express');
-var app = express.createServer();
+var app = express();
 
 app.get('/stooges/:name?', function(req, res, next) {
     var name = req.params.name;
@@ -16,7 +16,7 @@ app.get('/stooges/:name?', function(req, res, next) {
     }
 });
 
-app.get('/stooges', function(req, res){
+app.get('/stooges/*?', function(req, res){
   res.send('no stooges listed');
 });
 

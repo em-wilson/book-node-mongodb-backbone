@@ -136,11 +136,11 @@ module.exports = function(config, mongoose, Status, nodemailer) {
   var hasContact = function(account, contactId) {
     if ( null == account.contacts ) return false;
 
-    account.contacts.forEach(function(contact)) {
+    account.contacts.forEach(function(contact) {
       if ( contact.accountId == contactId ) {
         return true;
       }
-    }
+    });
     return false;
   };
 
@@ -165,6 +165,7 @@ module.exports = function(config, mongoose, Status, nodemailer) {
   return {
     findById: findById,
     register: register,
+    hasContact: hasContact,
     forgotPassword: forgotPassword,
     changePassword: changePassword,
     findByString: findByString,

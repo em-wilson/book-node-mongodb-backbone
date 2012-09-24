@@ -172,10 +172,11 @@ app.post('/accounts/:id/contact', function(req,res) {
 
   models.Account.findById(accountId, function(account) {
     if ( account ) {
-	  models.Account.findById(contactId, function(contact) {
-		models.Account.addContact(account, contact);
+      models.Account.findById(contactId, function(contact) {
+        models.Account.addContact(account, contact);
+
         // Make the reverse link
-		models.Account.addContact(contact, account);
+        models.Account.addContact(contact, account);
         account.save();
       });
     }
@@ -191,7 +192,7 @@ app.get('/accounts/:id', function(req, res) {
                      ? req.session.accountId
                      : req.params.id;
   models.Account.findById(accountId, function(account) {
-    if ( accountId == me || models.Account.hasContact(account, req.session.accountId) ) {
+    if ( accountId == 'me' || models.Account.hasContact(account, req.session.accountId) ) {
       account.isFriend = true;
     }
     res.send(account);
