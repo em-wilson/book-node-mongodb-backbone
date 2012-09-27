@@ -1,6 +1,8 @@
 var express = require('express');
 var app = express();
 
+app.set('view engine', 'jade');
+app.set('view options', { layout: true });
 app.set('views', __dirname + '/views');
 
 app.get('/stooges/:name?', function(req, res, next) {
@@ -10,7 +12,7 @@ app.get('/stooges/:name?', function(req, res, next) {
         case 'larry':
         case 'curly': 
         case 'moe':
-          res.render('stooges.jade', {stooge: name});
+          res.render('stooges', {stooge: name});
           break;
 
         default:
@@ -19,11 +21,11 @@ app.get('/stooges/:name?', function(req, res, next) {
 });
 
 app.get('/stooges/*?', function(req, res){
-  res.render('stooges.jade', {stooge: null});
+  res.render('stooges', {stooge: null});
 });
 
 app.get('/?', function(req, res){
-  res.render('index.jade');
+  res.render('index');
 });
 
 var port = 8080;

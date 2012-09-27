@@ -1,0 +1,21 @@
+extends layout
+
+block scripts
+  script(type='text/javascript', src='/socket.io/socket.io.js')
+  script(type='text/javascript')
+    var socket = io.connect('http://localhost:8080');
+    socket.on('chat', function(data) {
+      document.getElementById('chat').innerHTML =
+        '<p><b>' + data.title + '</b>: ' + data.contents + '</p>';
+    });
+    var submitChat = function(form) {
+      socket.emit('chat', {text: form.chat.value});
+      return false;
+    };
+
+block content
+  div#chat
+  
+  form(onsubmit='return submitChat(this);')
+    input#chat(name='chat', type='text')
+    input(type='submit', value='Send Chat')

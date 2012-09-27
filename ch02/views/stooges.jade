@@ -1,4 +1,7 @@
-if (stooge)
-  p #{stooge} is my favourite stooge.
-else
-  p no stooges listed
+extends layout
+
+block content
+  if (stooge)
+    p #{stooge} is my favourite stooge.
+  else
+    p no stooges listed
