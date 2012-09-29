@@ -1,0 +1,15 @@
+<h1><%=model.name.first %> <%= model.name.last %></h1>
+
+<% if ( !addButton ) { %>
+  <p><a href="#profile/<%=model.accountId%>">View</p>
+<% }%>
+
+<div class="actionarea">
+  <% if ( addButton ) { %>
+    <p><button class="addbutton">Add Contact</p>
+  <% } %>
+
+  <% if ( removeButton ) { %>
+    <p><button class="removebutton">Remove Contact</p>
+  <% } %>
+</div>
