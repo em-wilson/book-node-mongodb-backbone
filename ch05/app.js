@@ -1,5 +1,5 @@
 var express = require('express');
-var app = express.createServer();
+var app = express();
 
 app.configure(function(){
     app.set('view engine', 'jade');
