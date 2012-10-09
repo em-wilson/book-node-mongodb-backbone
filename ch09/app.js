@@ -19,19 +19,20 @@ var config = {
 }
 
 // Import the models
-app.models = {
+var models = {
   Account: require('./models/Account')(config, mongoose, nodemailer)
 };
 
 app.configure(function(){
+  app.sessionSecret = 'SocialNet secret key';
   app.set('view engine', 'jade');
   app.use(express.static(__dirname + '/public'));
   app.use(express.limit('1mb'));
   app.use(express.bodyParser());
   app.use(express.cookieParser());
   app.use(express.session({
-    secret: "SocialNet secret key",
-    key: 'express.sid', // NEW in Chapter 9
+    secret: app.sessionSecret,
+    key: 'express.sid',
     store: app.sessionStore
   }));
   mongoose.connect(dbPath, function onMongooseError(err) {
@@ -41,8 +42,9 @@ app.configure(function(){
 
 // Import the routes
 fs.readdirSync('routes').forEach(function(file) {
+  if ( file[0] == '.' ) return;
   var routeName = file.substr(0, file.indexOf('.'));
-  require('./routes/' + routeName)(app);
+  require('./routes/' + routeName)(app, models);
 });
 
 app.get('/', function(req, res){
@@ -56,7 +58,7 @@ app.post('/contacts/find', function(req, res) {
     return;
   }
 
-  app.models.Account.findByString(searchStr, function onSearchDone(err,accounts) {
+  models.Account.findByString(searchStr, function onSearchDone(err,accounts) {
     if (err || accounts.length == 0) {
       res.send(404);
     } else {

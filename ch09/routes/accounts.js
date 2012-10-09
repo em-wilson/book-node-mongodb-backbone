@@ -1,6 +1,4 @@
-module.exports = function(app) {
-  var models = app.models;
-
+module.exports = function(app, models) {
   app.get('/accounts/:id/contacts', function(req, res) {
     var accountId = req.params.id == 'me'
                        ? req.session.accountId

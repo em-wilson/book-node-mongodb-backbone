@@ -1,15 +1,10 @@
-module.exports = function(app) {
-  var models = app.models;
-
+module.exports = function(app, models) {
   app.post('/login', function(req, res) {
-    console.log(req.body);
-    console.log('login request');
     var email = req.param('email', null);
     var password = req.param('password', null);
   
     if ( null == email || email.length < 1
         || null == password || password.length < 1 ) {
-	  console.log('empty fields');
       res.send(400);
       return;
     }
@@ -19,7 +14,6 @@ module.exports = function(app) {
         res.send(401);
         return;
       }
-      console.log('login was successful');
       req.session.loggedIn = true;
       req.session.accountId = account._id;
       res.send(200);
