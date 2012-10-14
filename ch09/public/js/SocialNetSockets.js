@@ -3,17 +3,19 @@ define(['Sockets', 'models/contactcollection', 'views/chat'], function(sio, Cont
     var socket = null;
 
     var connectSocket = function() {
-      socket = io.connect().socket;
+      socket = io.connect();
 
       socket
         .on('connect_failed', function(reason) {
           console.error('unable to connect', reason);
         })
         .on('connect', function() {
-          socket.on('chat', function(data) {
-            eventDispatcher.trigger('socket:chat:' + data.to, data);
+          eventDispatcher.bind('socket:chat', sendChat);
+          socket.on('chatserver', function(data) {
+            eventDispatcher.trigger('socket:chat:start:' + data.from );
+            eventDispatcher.trigger('socket:chat:in:' + data.from, data);
           });
-	      var contactsCollection = new ContactCollection();
+          var contactsCollection = new ContactCollection();
           contactsCollection.url = '/accounts/me/contacts';
           new ChatView({collection: contactsCollection, socketEvents: eventDispatcher}).render();
           contactsCollection.fetch();
@@ -22,12 +24,11 @@ define(['Sockets', 'models/contactcollection', 'views/chat'], function(sio, Cont
 
     var sendChat = function(payload) {
       if ( null != socket ) {
-        socket.emit('chat', payload);
+        socket.emit('chatclient', payload);
       }
     };
 
     eventDispatcher.bind('app:loggedin', connectSocket);
-    eventDispatcher.bind('socket:chat', sendChat);
   }
 
   return {

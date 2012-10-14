@@ -5,38 +5,25 @@ define(['SocialNetView', 'text!templates/chatitem.html'], function(SocialNetView
     $el: $(this.el),
 
     events: {
-      'click .name': 'showChat',
-      'submit form': 'sendChat'
+      'click': 'startChatSession',
     },
 
     initialize: function(options) {
-      this.socketEvents = options.socketEvents;
-      this.socketEvents.on('socket:chat:' + this.model.get('_id'), this.receiveChat, this);
+      options.socketEvents.bind(
+        'socket:chat:start:' + this.model.get('accountId'),
+        this.startChatSession,
+        this
+      );
     },
 
-    receiveChat: function(data) {
-    },
-
-    showChat: function() {
-      this.$el.children('form').toggle();
-    },
-
-    sendChat: function() {
-      var chatText = this.$el.find('input[name=chat]').val();
-      if ( chatText && /[^\s]+/.test(chatText) ) {
-        this.socketEvents.trigger('socket:chat', {
-          to: this.model.get('_id'),
-          text: chatText
-        });
-      }
-      return false;
+    startChatSession: function() {
+      this.trigger('chat:start', this.model);
     },
 
     render: function() {
       this.$el.html(_.template(chatItemTemplate, {
         model: this.model.toJSON()
       }));
-      this.$el.children('form').hide();
       return this;
     }
   });
