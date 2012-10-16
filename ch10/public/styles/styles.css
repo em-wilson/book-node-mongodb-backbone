@@ -1,0 +1,55 @@
+form {
+  width: 400px;
+}
+
+#chat form {
+  width: auto;
+}
+
+#chat {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+}
+
+.chat_list {
+  float: right;
+  border: 1px solid black;
+  list-style-type: none;
+  overflow: auto;
+  width: 120px;
+  height: 300px;
+  margin: 0;
+  padding: 0;
+}
+
+.chat_list li {
+  width: 100%;
+  padding: 10px 0;
+  background-color: #0099ff;
+}
+
+.chat_list li:nth-child(odd) {
+  background-color: #80ccff;
+}
+
+.chat_list span {
+  margin: 10px;
+}
+
+.chat_session {
+  float: left;
+  width: 250px;
+  height: 300px;
+}
+
+.online_indicator {
+  float: left;
+  width: 15px;
+  height: 16px;
+  background-image: url('/images/trafficlight.png');
+}
+
+.online_indicator.online {
+  background-position: -15px 0;
+}
