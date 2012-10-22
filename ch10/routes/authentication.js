@@ -16,7 +16,7 @@ module.exports = function(app, models) {
       }
       req.session.loggedIn = true;
       req.session.accountId = account._id;
-      res.send(200);
+      res.send(account._id);
     });
   });
   
@@ -38,7 +38,7 @@ module.exports = function(app, models) {
   
   app.get('/account/authenticated', function(req, res) {
     if ( req.session && req.session.loggedIn ) {
-      res.send(200);
+      res.send(req.session.accountId);
     } else {
       res.send(401);
     }

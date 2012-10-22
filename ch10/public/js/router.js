@@ -32,7 +32,8 @@ function(IndexView, RegisterView, LoginView, ForgotPasswordView, ProfileView,
       var statusCollection = new StatusCollection();
       statusCollection.url = '/accounts/me/activity';
       this.changeView(new IndexView({
-        collection: statusCollection
+        collection: statusCollection,
+        socketEvents:this.socketEvents // NEW
       }));
       statusCollection.fetch();
     },
@@ -55,7 +56,7 @@ function(IndexView, RegisterView, LoginView, ForgotPasswordView, ProfileView,
 
     profile: function(id) {
       var model = new Account({id:id});
-      this.changeView(new ProfileView({model:model}));
+      this.changeView(new ProfileView({model:model, socketEvents:this.socketEvents}));
       model.fetch();
     },
 

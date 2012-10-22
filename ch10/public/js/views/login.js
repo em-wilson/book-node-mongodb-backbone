@@ -16,7 +16,7 @@ define(['SocialNetView', 'text!templates/login.html'], function(SocialNetView, l
       var socketEvents = this.socketEvents;
       $.post('/login',
         this.$('form').serialize(), function(data) {
-          socketEvents.trigger('app:loggedin');
+          socketEvents.trigger('app:loggedin', data);
           window.location.hash = 'index';
       }).error(function(){
         $("#error").text('Unable to login.');

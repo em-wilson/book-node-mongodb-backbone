@@ -1,8 +1,11 @@
 define(['Sockets', 'models/contactcollection', 'views/chat'], function(sio, ContactCollection, ChatView) {
   var SocialNetSockets = function(eventDispatcher) {
+    var accountId = null;
+
     var socket = null;
 
-    var connectSocket = function() {
+    var connectSocket = function(socketAccountId) {
+      accountId = socketAccountId;
       socket = io.connect();
 
       socket
@@ -28,6 +31,12 @@ define(['Sockets', 'models/contactcollection', 'views/chat'], function(sio, Cont
     var handleContactEvent = function(eventObj) {
       var eventName = eventObj.action + ':' + eventObj.from;
       eventDispatcher.trigger(eventName, eventObj);
+
+///////////// NEW
+      if ( eventObj.from == accountId ) {
+        eventName = eventObj.action + ':me';
+        eventDispatcher.trigger(eventName, eventObj);
+      }
     };
 
     var sendChat = function(payload) {

@@ -1,6 +1,6 @@
 var schemaOptions = {
   toJSON: {
-    virtuals: true	
+    virtuals: true
   },
   toObject: {
     virtuals: true

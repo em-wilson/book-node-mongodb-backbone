@@ -7,7 +7,8 @@ define(['router', 'SocialNetSockets'], function(router, socket) {
   var checkLogin = function(callback) {
     $.ajax("/account/authenticated", {
       method: "GET",
-      success: function() {
+      success: function(data) {
+        router.socketEvents.trigger('app:loggedin', data);
         return callback(true);
       },
       error: function(data) {
@@ -18,7 +19,6 @@ define(['router', 'SocialNetSockets'], function(router, socket) {
 
   var runApplication = function(authenticated) {
     if (authenticated) {
-      router.socketEvents.trigger('app:loggedin');
       window.location.hash = 'index';
     } else {
       window.location.hash = 'login';
