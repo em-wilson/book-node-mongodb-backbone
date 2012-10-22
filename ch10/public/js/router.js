@@ -33,7 +33,7 @@ function(IndexView, RegisterView, LoginView, ForgotPasswordView, ProfileView,
       statusCollection.url = '/accounts/me/activity';
       this.changeView(new IndexView({
         collection: statusCollection,
-        socketEvents:this.socketEvents // NEW
+        socketEvents:this.socketEvents
       }));
       statusCollection.fetch();
     },

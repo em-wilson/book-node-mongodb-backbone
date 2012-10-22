@@ -12,7 +12,7 @@ function(SocialNetView,  profileTemplate,
     },
 
     initialize: function (options) {
-      this.socketEvents = options.socketEvents; // NEW
+      this.socketEvents = options.socketEvents;
       this.model.bind('change', this.render, this);
     },
 
@@ -37,8 +37,8 @@ function(SocialNetView,  profileTemplate,
     },
 
     render: function() {
-      if ( this.model.get('_id')) { // NEW
-        this.socketEvents.bind('status:' + this.model.get('_id'), this.onSocketStatusAdded, this ); //NEW
+      if ( this.model.get('_id')) {
+        this.socketEvents.bind('status:' + this.model.get('_id'), this.onSocketStatusAdded, this );
       }
       var that = this;
       this.$el.html(

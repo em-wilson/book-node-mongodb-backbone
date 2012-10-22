@@ -25,14 +25,14 @@ function(SocialNetView, indexTemplate, StatusView, Status) {
       var newStatus = data.data;
       var found = false;
       this.collection.forEach(function(status) {
-	    var name = status.get('name');
+        var name = status.get('name');
         if ( name && name.full == newStatus.name.full && status.get('status') == newStatus.status ) {
           found = true;
         }
       });
       if (!found ) {
         this.collection.add(new Status({status:newStatus.status,name:newStatus.name}))
-	  }
+      }
     },
 
     onStatusAdded: function(status) {
