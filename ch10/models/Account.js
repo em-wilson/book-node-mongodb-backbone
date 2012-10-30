@@ -95,27 +95,27 @@ module.exports = function(app, config, mongoose, Status, nodemailer) {
     });
   };
 
-  var login = function(email, password, cb) {
+  var login = function(email, password, callback) {
     var shaSum = crypto.createHash('sha256');
     shaSum.update(password);
     Account.findOne({email:email,password:shaSum.digest('hex')},function(err,doc){
-      cb(doc);
+      callback(doc);
     });
   };
 
-  var findByString = function(searchStr, cb) {
+  var findByString = function(searchStr, callback) {
     var searchRegex = new RegExp(searchStr, 'i');
     Account.find({
       $or: [
         { 'name.full': { $regex: searchRegex } },
         { email:       { $regex: searchRegex } }
       ]
-    }, cb);
+    }, callback);
   };
 
-  var findById = function(accountId, cb) {
+  var findById = function(accountId, callback) {
     Account.findOne({_id:accountId}, function(err,doc) {
-      cb(doc);
+      callback(doc);
     });
   };
 

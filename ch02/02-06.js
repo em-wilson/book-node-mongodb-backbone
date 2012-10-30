@@ -32,25 +32,6 @@ io.sockets.on('connection', function(socket) {
   });
 });
 
-app.get('/stooges/:name?', function(req, res, next) {
-    var name = req.params.name;
-
-    switch ( name ? name.toLowerCase() : '' ) {
-        case 'larry':
-        case 'curly': 
-        case 'moe':
-          res.render('stooges', {stooge: name});
-          break;
-
-        default:
-          next();
-    }
-});
-
-app.get('/stooges/*?', function(req, res){
-  res.render('stooges', {stooge: null});
-});
-
 app.get('/?', function(req, res){
   res.render('index');
 });

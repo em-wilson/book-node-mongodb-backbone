@@ -1,7 +1,7 @@
 Stooge = Backbone.Model.extend({
     defaults: {
         'name': 'Guy Incognito',
-        'power':
+        'power': 'Classified',
 
         'friends': [],
     },

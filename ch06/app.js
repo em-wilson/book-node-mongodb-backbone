@@ -7,7 +7,7 @@ var MemoryStore = require('connect').session.MemoryStore;
 var mongoose = require('mongoose');
 var config = {
   mail: require('./config/mail')
-}
+};
 
 // Import the accounts
 var Account = require('./models/Account')(config, mongoose, nodemailer);

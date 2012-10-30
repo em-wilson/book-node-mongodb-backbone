@@ -70,17 +70,17 @@ module.exports = function(config, mongoose, Status, nodemailer) {
     });
   };
 
-  var login = function(email, password, cb) {
+  var login = function(email, password, callback) {
     var shaSum = crypto.createHash('sha256');
     shaSum.update(password);
     Account.findOne({email:email,password:shaSum.digest('hex')},function(err,doc){
-      cb(doc);
+      callback(doc);
     });
   };
 
-  var findById = function(accountId, cb) {
+  var findById = function(accountId, callback) {
     Account.findOne({_id:accountId}, function(err,doc) {
-      cb(doc);
+      callback(doc);
     });
   }
 

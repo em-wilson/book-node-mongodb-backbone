@@ -29,7 +29,7 @@ app.sessionStore = new MemoryStore();
 var mongoose = require('mongoose');
 var config = {
   mail: require('./config/mail')
-}
+};
 
 // Import the models
 var models = {
