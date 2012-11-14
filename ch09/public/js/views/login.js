@@ -1,4 +1,5 @@
-define(['SocialNetView', 'text!templates/login.html'], function(SocialNetView, loginTemplate) {
+define(['SocialNetView', 'text!templates/login.html'],
+function(SocialNetView, loginTemplate) {
   var loginView = SocialNetView.extend({
     requireLogin: false,
 

@@ -1,4 +1,5 @@
-define(['SocialNetView', 'text!templates/chatitem.html'], function(SocialNetView, chatItemTemplate) {
+define(['SocialNetView', 'text!templates/chatitem.html'],
+function(SocialNetView, chatItemTemplate) {
   var chatItemView = SocialNetView.extend({
     tagName: 'li',
 

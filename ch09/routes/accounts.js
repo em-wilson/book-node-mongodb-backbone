@@ -110,7 +110,8 @@ module.exports = function(app, models) {
                        ? req.session.accountId
                        : req.params.id;
     models.Account.findById(accountId, function(account) {
-      if ( accountId == 'me' || models.Account.hasContact(account, req.session.accountId) ) {
+      if ( accountId == 'me'
+           || models.Account.hasContact(account, req.session.accountId) ) {
         account.isFriend = true;
       }
       res.send(account);

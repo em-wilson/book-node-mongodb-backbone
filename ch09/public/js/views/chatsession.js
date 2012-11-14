@@ -1,4 +1,5 @@
-define(['SocialNetView', 'text!templates/chatsession.html'], function(SocialNetView, chatItemTemplate) {
+define(['SocialNetView', 'text!templates/chatsession.html'],
+function(SocialNetView, chatItemTemplate) {
   var chatItemView = SocialNetView.extend({
     tagName: 'div',
 
@@ -12,7 +13,11 @@ define(['SocialNetView', 'text!templates/chatsession.html'], function(SocialNetV
 
     initialize: function(options) {
       this.socketEvents = options.socketEvents;
-      this.socketEvents.on('socket:chat:in:' + this.model.get('accountId'), this.receiveChat, this);
+      this.socketEvents.on(
+        'socket:chat:in:' + this.model.get('accountId'),
+        this.receiveChat,
+        this
+      );
     },
 
     receiveChat: function(data) {

@@ -2,7 +2,7 @@ define(['views/index', 'views/register', 'views/login',
         'views/forgotpassword', 'views/profile', 'models/Account',
         'models/StatusCollection'],
 function(IndexView, RegisterView, LoginView, ForgotPasswordView, ProfileView,
-	     Account, StatusCollection) {
+         Account, StatusCollection) {
   var SocialRouter = Backbone.Router.extend({
     currentView: null,
 

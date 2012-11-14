@@ -1,4 +1,5 @@
-define(['Sockets', 'models/contactcollection', 'views/chat'], function(sio, ContactCollection, ChatView) {
+define(['Sockets', 'models/contactcollection', 'views/chat'],
+function(sio, ContactCollection, ChatView) {
   var SocialNetSockets = function(eventDispatcher) {
     var accountId = null;
 
@@ -23,7 +24,8 @@ define(['Sockets', 'models/contactcollection', 'views/chat'], function(sio, Cont
 
           var contactsCollection = new ContactCollection();
           contactsCollection.url = '/accounts/me/contacts';
-          new ChatView({collection: contactsCollection, socketEvents: eventDispatcher}).render();
+          new ChatView({collection: contactsCollection,
+                        socketEvents: eventDispatcher}).render();
           contactsCollection.fetch();
         });
     };
@@ -32,7 +34,6 @@ define(['Sockets', 'models/contactcollection', 'views/chat'], function(sio, Cont
       var eventName = eventObj.action + ':' + eventObj.from;
       eventDispatcher.trigger(eventName, eventObj);
 
-///////////// NEW
       if ( eventObj.from == accountId ) {
         eventName = eventObj.action + ':me';
         eventDispatcher.trigger(eventName, eventObj);

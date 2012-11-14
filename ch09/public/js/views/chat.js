@@ -1,4 +1,5 @@
-define(['SocialNetView', 'views/chatsession', 'views/chatitem', 'text!templates/chat.html'],
+define(['SocialNetView', 'views/chatsession', 'views/chatitem',
+        'text!templates/chat.html'],
 function(SocialNetView, ChatSessionView, ChatItemView, chatItemTemplate) {
   var chatView = SocialNetView.extend({
     el: $('#chat'),
@@ -17,7 +18,10 @@ function(SocialNetView, ChatSessionView, ChatItemView, chatItemTemplate) {
     startChatSession: function(model) {
       var accountId = model.get('accountId');
       if ( !this.chatSessions[accountId]) {
-        var chatSessionView = new ChatSessionView({model:model, socketEvents: this.socketEvents});
+        var chatSessionView = new ChatSessionView({
+          model:model,
+          socketEvents: this.socketEvents
+                                                        });
         this.$el.prepend(chatSessionView.render().el);
         this.chatSessions[accountId] = chatSessionView;
       }
