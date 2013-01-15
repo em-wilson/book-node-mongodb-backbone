@@ -9,7 +9,7 @@
 <dl>
 
 <dt><strong>node.js</strong></dt>
-<dd>Current version is 0.6.6</dd>
+<dd>Current version is 0.8.12</dd>
 
 <dt><strong>MongoDB</strong></dt>
 <dd>Available from?</dd>
