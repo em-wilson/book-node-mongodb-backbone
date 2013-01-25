@@ -18,3 +18,5 @@
 <dd>Available from?</dd>
 
 </dl>
+
+<p>The code in this repository is kept up to date with errata corrections. If you're looking for an exact copy of the code from the first edition of the book, you can review the tag at <a href="https://github.com/Swiftam/book-node-mongodb-backbone/tree/Edition1-Dec2012">https://github.com/Swiftam/book-node-mongodb-backbone/tree/Edition1-Dec2012</a>.</p>

@@ -1,4 +1,4 @@
-module.exports = function(app, config, mongoose, Status, nodemailer) {
+module.exports = function(app, config, mongoose, nodemailer) {
   var crypto = require('crypto');
 
   var Status = new mongoose.Schema({
