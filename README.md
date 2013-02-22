@@ -9,13 +9,13 @@
 <dl>
 
 <dt><strong>node.js</strong></dt>
-<dd>Current version is 0.8.12</dd>
+<dd>Current version is 0.8.29 (<a href='http://nodejs.org/'>http://www.nodejs.org</a>)</dd>
 
 <dt><strong>MongoDB</strong></dt>
-<dd>Available from?</dd>
+<dd>MongoDB available from <a href='http://docs.mongodb.org/manual/installation/'>mongodb.or/</a> and Node driver from <a href='https://npmjs.org/package/mongodb'>https://npmjs.org/package/mongodb</a></dd>
 
 <dt><strong>Backbone.js</strong></dt>
-<dd>Available from?</dd>
+<dd>Available from <a href='http://www.http://backbonejs.org/'>Backbonejs.org</a></dd>
 
 </dl>
 
