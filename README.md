@@ -1,5 +1,7 @@
 <h1>Building Node Applications with MongoDB and Backbone</h1>
 
+![alt text][cover]
+
 <p>This is the example source code accompanying O'Reilly's "Building Node Applications with MongoDB and Backbone" by Mike Wilson.</p>
 
 <h2>Versions</h2>
@@ -39,3 +41,5 @@ tags to the repository version frozen at each publication:
 </dl>
 
 <p>The code in this repository is kept up to date with errata corrections. If you're looking for an exact copy of the code from the first edition of the book, you can review the tag at <a href="https://github.com/Swiftam/book-node-mongodb-backbone/tree/Edition1-Dec2012">https://github.com/Swiftam/book-node-mongodb-backbone/tree/Edition1-Dec2012</a>.</p>
+
+[cover]: https://raw.github.com/Swiftam/book-node-mongodb-backbone/master/images/cat.gif "Building Node Applications with MongoDB and Backbone"
