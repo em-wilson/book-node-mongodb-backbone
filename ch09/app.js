@@ -69,4 +69,4 @@ app.post('/contacts/find', function(req, res) {
 
 // New in Chapter 9 - the server listens, instead of the app
 app.server.listen(8080);
-console.log('Listening on port 8080');
+console.log("SocialNet is listening to port 8080.");

@@ -11,3 +11,4 @@ app.get('/', function(req, res){
 });
 
 app.listen(8080);
+console.log("SocialNet is listening to port 8080.");

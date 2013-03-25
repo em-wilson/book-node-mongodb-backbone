@@ -164,4 +164,4 @@ app.post('/resetPassword', function(req, res) {
 });
 
 app.listen(8080);
-console.log('Listening on port 8080');
+console.log("SocialNet is listening to port 8080.");
