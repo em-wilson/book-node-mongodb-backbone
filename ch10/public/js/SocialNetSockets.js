@@ -1,4 +1,4 @@
-define(['Sockets', 'models/contactcollection', 'views/chat'],
+define(['Sockets', 'models/ContactCollection', 'views/chat'],
 function(sio, ContactCollection, ChatView) {
   var SocialNetSockets = function(eventDispatcher) {
     var accountId = null;
