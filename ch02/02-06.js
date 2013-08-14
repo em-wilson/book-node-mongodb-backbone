@@ -23,7 +23,7 @@ io.sockets.on('connection', function(socket) {
     });
   };
   setInterval(function() {
-    var randomIndex = Math.floor(Math.random()*catchPhrases.length)
+    var randomIndex = Math.floor(Math.random()*catchPhrases.length);
     sendChat('Stooge', catchPhrases[randomIndex]);
   }, 5000);
   sendChat('Welcome to Stooge Chat', 'The Stooges are on the line');
