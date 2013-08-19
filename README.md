@@ -22,7 +22,7 @@ tags to the repository version frozen at each publication:
 <dl>
 
 <dt><strong>node.js</strong></dt>
-<dd>Current version is 0.10.1 (<a href='http://nodejs.org/'>http://www.nodejs.org</a>)</dd>
+<dd>Current version is 0.10.16 (<a href='http://nodejs.org/'>http://www.nodejs.org</a>)</dd>
 
 <dt><strong>MongoDB</strong></dt>
 <dd>MongoDB available from <a href='http://docs.mongodb.org/manual/installation/'>mongodb.or/</a> and Node driver from <a href='https://npmjs.org/package/mongodb'>https://npmjs.org/package/mongodb</a></dd>
