@@ -1,7 +1,7 @@
 var express     = require('express');
 var http        = require('http');
 var nodemailer  = require('nodemailer');
-var MemoryStore = require('connect').session.MemoryStore;
+var MemoryStore = require('express-session').MemoryStore;
 var app         = express();
 var dbPath      = 'mongodb://localhost/nodebackbone';
 var fs          = require('fs');
@@ -16,7 +16,7 @@ app.addEventListener = function ( eventName, callback ) {
   eventDispatcher.on(eventName, callback);
 };
 app.removeEventListener = function( eventName, callback ) {
-  eventDispatcher.removeListener( eventName, callback );	
+  eventDispatcher.removeListener( eventName, callback );
 };
 app.triggerEvent = function( eventName, eventOptions ) {
   eventDispatcher.emit( eventName, eventOptions );
