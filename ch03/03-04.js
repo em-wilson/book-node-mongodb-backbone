@@ -5,7 +5,7 @@ var Stooge = Backbone.Model.extend({
   }
 });
 
-var Team = BackBone.Collection.extend({
+var Team = Backbone.Collection.extend({
   model: Stooge
 });
 
