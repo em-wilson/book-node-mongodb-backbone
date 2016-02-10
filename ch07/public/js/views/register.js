@@ -15,7 +15,7 @@ define(['SocialNetView', 'text!templates/register.html'], function(SocialNetView
         email: $('input[name=email]').val(),
         password: $('input[name=password]').val(),
       }, function(data) {
-        console.log(data);
+        window.location.hash = 'index';
       });
       return false;
     },
