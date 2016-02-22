@@ -1,7 +1,7 @@
 var express = require("express");
 var app = express();
 var nodemailer = require('nodemailer');
-var MemoryStore = require('connect').session.MemoryStore;
+var MemoryStore = require('express-session').MemoryStore;
 
 // Import the data layer
 var mongoose = require('mongoose');

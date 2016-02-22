@@ -1,7 +1,7 @@
 var express     = require("express");
 var app         = express();
 var nodemailer  = require('nodemailer');
-var MemoryStore = require('connect').session.MemoryStore;
+var MemoryStore = require('express-session').MemoryStore;
 var dbPath      = 'mongodb://localhost/nodebackbone';
 
 // Import the data layer
@@ -104,7 +104,7 @@ app.get('/accounts/:id/status', function(req, res) {
                      ? req.session.accountId
                      : req.params.id;
   models.Account.findById(accountId, function(account) {
-    res.send(account.status);
+    res.send(account);
   });
 });
 
@@ -114,7 +114,10 @@ app.post('/accounts/:id/status', function(req, res) {
                      : req.params.id;
   models.Account.findById(accountId, function(account) {
     status = {
-      name: account.name,
+      name: {
+        first: account.name.first,
+        last: account.name.last
+      },
       status: req.param('status', '')
     };
     account.status.push(status);
