@@ -1,4 +1,4 @@
-define(['SocialNetView', 'models/Contact', 'views/Contact', 'text!templates/addcontact.html'],
+define(['SocialNetView', 'models/Contact', 'views/contact', 'text!templates/addcontact.html'],
 function(SocialNetView, Contact, ContactView, addcontactTemplate)
 {
   var addcontactView = SocialNetView.extend({
